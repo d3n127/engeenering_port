@@ -1,0 +1,369 @@
+/* ============================================================
+   Design tokens + global typography
+   Palette taken from the client-facing design:
+   cream, ink, electric blue, signal lime, alert red
+   ============================================================ */
+
+:root {
+  --cream: #edeae1;
+  --cream-2: #f4f2ea;
+  --paper: #faf8f2;
+  --ink: #0d0d0f;
+  --ink-2: #16171a;
+  --ink-3: #1e1f23;
+  --blue: #3355ff;
+  --blue-deep: #2440e8;
+  --lime: #c6f53c;
+  --lime-deep: #b2e01f;
+  --red: #ff4438;
+  --gray: #6f6d66;
+  --gray-2: #9a978e;
+  --line: rgba(13, 13, 15, 0.14);
+  --line-dark: rgba(255, 255, 255, 0.14);
+
+  --sans: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --serif: 'Instrument Serif', 'Times New Roman', Georgia, serif;
+  --mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+
+  --pad: clamp(20px, 4vw, 56px);
+  --maxw: 1440px;
+  --radius: 2px;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* keep anchored sections clear of the fixed navigation bar */
+  scroll-padding-top: 96px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body.dark-page {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+
+p {
+  margin: 0;
+}
+
+::selection {
+  background: var(--lime);
+  color: var(--ink);
+}
+
+/* visible keyboard focus (mouse/touch stay clean) */
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+/* ---------- shared layout helpers ---------- */
+
+.shell {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding-inline: var(--pad);
+}
+
+.section {
+  padding-block: clamp(72px, 10vw, 140px);
+  position: relative;
+}
+
+.section--dark {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.section--blue {
+  background: var(--blue);
+  color: #fff;
+}
+
+/* small mono label:  01 · ABOUT ME  */
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gray);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.section--dark .eyebrow,
+.section--blue .eyebrow {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 26px;
+  height: 2px;
+  background: var(--blue);
+  flex: none;
+}
+
+.section--dark .eyebrow::before,
+.section--blue .eyebrow::before {
+  background: var(--lime);
+}
+
+/* Display headings */
+.display {
+  font-size: clamp(44px, 7.6vw, 116px);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.92;
+}
+
+.display em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--blue);
+}
+
+.section--dark .display em,
+.section--blue .display em {
+  color: var(--lime);
+}
+
+.h2 {
+  font-size: clamp(32px, 4.4vw, 64px);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.lede {
+  font-size: clamp(16px, 1.3vw, 20px);
+  color: var(--gray);
+  max-width: 46ch;
+  line-height: 1.6;
+}
+
+.section--dark .lede,
+.section--blue .lede {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* ---------- buttons ---------- */
+
+.btn {
+  --btn-bg: var(--blue);
+  --btn-fg: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 26px;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border: 1px solid var(--btn-bg);
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.35s var(--ease),
+    background 0.3s var(--ease),
+    color 0.3s var(--ease),
+    border-color 0.3s var(--ease);
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn--lime {
+  --btn-bg: var(--lime);
+  --btn-fg: var(--ink);
+  border-color: var(--lime);
+}
+
+.btn--ink {
+  --btn-bg: var(--ink);
+  --btn-fg: #fff;
+  border-color: var(--ink);
+}
+
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-fg: currentColor;
+  border-color: var(--line);
+}
+
+.section--dark .btn--ghost,
+.section--blue .btn--ghost {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.btn--ghost:hover {
+  --btn-bg: var(--ink);
+  --btn-fg: var(--cream);
+}
+
+.section--dark .btn--ghost:hover {
+  --btn-bg: var(--cream);
+  --btn-fg: var(--ink);
+}
+
+.btn .arr {
+  transition: transform 0.35s var(--ease);
+}
+
+.btn:hover .arr {
+  transform: translate(4px, -4px);
+}
+
+.btn:hover .arr--down {
+  transform: translateY(4px);
+}
+
+/* underline text link */
+.tlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  font-size: 15px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+  transition: gap 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.tlink:hover {
+  gap: 16px;
+  border-color: currentColor;
+}
+
+/* ---------- chips / tags ---------- */
+
+.tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--gray);
+  white-space: nowrap;
+}
+
+.section--dark .tag {
+  border-color: var(--line-dark);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ---------- scroll reveal ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(34px);
+  transition:
+    opacity 0.9s var(--ease),
+    transform 0.9s var(--ease);
+  transition-delay: var(--d, 0ms);
+  will-change: opacity, transform;
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal--left {
+  transform: translateX(-40px);
+}
+
+.reveal--right {
+  transform: translateX(40px);
+}
+
+.reveal--scale {
+  transform: scale(0.94);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* on phones the side-slide reveals must not create horizontal overflow */
+@media (max-width: 640px) {
+  .reveal--left,
+  .reveal--right {
+    transform: translateY(30px);
+  }
+}

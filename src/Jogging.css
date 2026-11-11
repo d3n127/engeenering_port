@@ -1,0 +1,478 @@
+/* ============================================================
+   Jogging / Strava page — dark with Strava orange accents
+   ============================================================ */
+
+.jog {
+  min-height: 100vh;
+  padding-top: clamp(100px, 12vh, 140px);
+  padding-bottom: clamp(60px, 8vw, 110px);
+  background:
+    radial-gradient(1000px 560px at 88% 4%, rgba(252, 82, 0, 0.2), transparent 62%),
+    radial-gradient(800px 500px at 6% 92%, rgba(51, 85, 255, 0.18), transparent 66%),
+    var(--ink);
+  color: var(--cream);
+}
+
+.jog__shell {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 3vw, 40px);
+}
+
+.jog__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 26px;
+  flex-wrap: wrap;
+}
+
+.jog__back {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.3s var(--ease);
+}
+
+.jog__back:hover {
+  color: #fc5200;
+}
+
+.jog__title {
+  margin-top: 14px;
+  font-size: clamp(42px, 6vw, 78px);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+}
+
+.jog__sub {
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.jog__cta {
+  --btn-bg: #fc5200;
+  --btn-fg: #fff;
+  border-color: #fc5200;
+}
+
+.jog__cta:hover {
+  --btn-bg: #ff6a22;
+}
+
+/* ---------------- stats ---------------- */
+
+.jog__stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 20px);
+}
+
+.jstat {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--line-dark);
+  padding: clamp(18px, 2vw, 28px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.4s var(--ease), border-color 0.4s var(--ease);
+}
+
+.jstat:hover {
+  transform: translateY(-6px);
+  border-color: rgba(252, 82, 0, 0.7);
+}
+
+.jstat__label {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.jstat__value {
+  font-size: clamp(30px, 3.2vw, 46px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.jstat__value em {
+  font-style: normal;
+  font-size: 0.42em;
+  color: #fc5200;
+  margin-left: 6px;
+  letter-spacing: 0.02em;
+}
+
+.jstat__bar {
+  height: 3px;
+  background: linear-gradient(90deg, #fc5200, rgba(252, 82, 0, 0.15));
+  transform-origin: left;
+  animation: grow 1.2s var(--ease) 0.2s backwards;
+}
+
+/* ---------------- cards ---------------- */
+
+.jog__mid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: clamp(14px, 1.8vw, 24px);
+}
+
+.jcard {
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid var(--line-dark);
+  padding: clamp(18px, 2vw, 28px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2vw, 24px);
+}
+
+.jcard__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line-dark);
+}
+
+/* route map */
+
+.route {
+  width: 100%;
+  height: auto;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line-dark);
+}
+
+.route__grid line {
+  stroke: rgba(255, 255, 255, 0.07);
+  stroke-width: 1;
+}
+
+.route__path {
+  stroke: #fc5200;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-dasharray: 1400;
+  stroke-dashoffset: 1400;
+  animation: drawRoute 3s var(--ease) 0.3s forwards;
+}
+
+.route__glow {
+  stroke: rgba(252, 82, 0, 0.28);
+  stroke-width: 14;
+  stroke-linecap: round;
+  stroke-dasharray: 1400;
+  stroke-dashoffset: 1400;
+  animation: drawRoute 3s var(--ease) 0.3s forwards;
+  filter: blur(6px);
+}
+
+@keyframes drawRoute {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.route__start {
+  fill: var(--lime);
+}
+
+.route__end {
+  fill: #fc5200;
+}
+
+.route__halo {
+  fill: none;
+  stroke: #fc5200;
+  stroke-width: 2;
+  transform-origin: center;
+  animation: pingSoft 2.2s ease-out infinite;
+}
+
+@keyframes pingSoft {
+  0% {
+    r: 9;
+    opacity: 1;
+  }
+  100% {
+    r: 34;
+    opacity: 0;
+  }
+}
+
+.route__label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  fill: rgba(255, 255, 255, 0.6);
+}
+
+.jog__route-foot {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.jog__route-foot strong {
+  display: block;
+  font-family: var(--sans);
+  font-size: clamp(18px, 1.7vw, 24px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--cream);
+  text-transform: none;
+}
+
+/* weekly bars */
+
+.bars {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: clamp(6px, 1vw, 14px);
+  align-items: end;
+  min-height: clamp(180px, 22vw, 260px);
+}
+
+.bars__col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.bars__bar {
+  width: 100%;
+  height: var(--h, 20%);
+  background: linear-gradient(180deg, #fc5200, #ff8a3d);
+  transform-origin: bottom;
+  animation: barUp 0.9s var(--ease) var(--d, 0ms) backwards;
+}
+
+.bars__bar.is-empty {
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.14) 0 6px,
+    transparent 6px 12px
+  );
+}
+
+@keyframes barUp {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+.bars__val {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: rgba(255, 255, 255, 0.7);
+  min-height: 14px;
+}
+
+.bars__day {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.jog__week-note {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.62);
+  padding-top: 16px;
+  border-top: 1px solid var(--line-dark);
+}
+
+/* ---------------- strava block ---------------- */
+
+.strava {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: clamp(20px, 3vw, 40px);
+  align-items: center;
+  padding: clamp(24px, 3vw, 44px);
+  background: linear-gradient(120deg, #fc5200 0%, #ff7a1f 60%, #ff9a3d 100%);
+  color: #14100c;
+  box-shadow: 24px 24px 0 rgba(0, 0, 0, 0.55);
+  position: relative;
+  overflow: hidden;
+}
+
+.strava::after {
+  content: 'STRAVA STRAVA STRAVA';
+  position: absolute;
+  right: -3%;
+  bottom: -34%;
+  font-size: clamp(70px, 9vw, 130px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: rgba(255, 255, 255, 0.16);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.strava__mark {
+  width: clamp(72px, 8vw, 104px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  background: #14100c;
+  color: #fc5200;
+  animation: float 5s ease-in-out infinite;
+}
+
+.strava__kicker {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.strava__title {
+  margin-top: 12px;
+  font-size: clamp(26px, 3vw, 44px);
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+
+.strava__text {
+  margin-top: 12px;
+  max-width: 54ch;
+  font-size: 15.5px;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+.strava__btn {
+  --btn-bg: #14100c;
+  --btn-fg: #fff;
+  border-color: #14100c;
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+/* ---------------- activity list ---------------- */
+
+.jog__list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line-dark);
+}
+
+.jog__list-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 20px 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.act {
+  display: grid;
+  grid-template-columns: 50px minmax(0, 1fr) repeat(3, minmax(70px, auto)) 40px;
+  gap: clamp(10px, 2vw, 26px);
+  align-items: center;
+  padding: clamp(16px, 2vw, 24px) 8px;
+  border-top: 1px solid var(--line-dark);
+  transition: background 0.35s var(--ease), padding-left 0.35s var(--ease);
+}
+
+.act:hover {
+  background: rgba(255, 255, 255, 0.05);
+  padding-left: 18px;
+}
+
+.act__n {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.act__name {
+  font-size: clamp(16px, 1.5vw, 20px);
+  letter-spacing: -0.02em;
+}
+
+.act__meta {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.66);
+  text-align: right;
+}
+
+.act__meta--accent {
+  color: #fc5200;
+}
+
+.act__go {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line-dark);
+  display: grid;
+  place-items: center;
+  color: rgba(255, 255, 255, 0.6);
+  transition: background 0.3s var(--ease), color 0.3s var(--ease);
+}
+
+.act:hover .act__go {
+  background: #fc5200;
+  border-color: #fc5200;
+  color: #fff;
+}
+
+@media (max-width: 1040px) {
+  .jog__stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .jog__mid {
+    grid-template-columns: 1fr;
+  }
+  .strava {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+}
+
+@media (max-width: 760px) {
+  .act {
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+    row-gap: 6px;
+  }
+  .act__meta:nth-of-type(3) {
+    display: none;
+  }
+  .act__go {
+    display: none;
+  }
+  .jog__route-foot {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
